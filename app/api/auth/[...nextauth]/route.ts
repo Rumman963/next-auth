@@ -1,6 +1,38 @@
 import NextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+
+const handler = NextAuth({
+    providers:[
+        CredentialsProvider ({
+            name:"login with email",
+            credentials:{
+                username:{label:"Username" , type:"text" , placeholder:"rumman@gmail.com" },
+                password:{label:"Password" , type:"password"}
+            },
+
+            async authorize(credentials , req){
+                const username = credentials?.username;
+                const password = credentials?.password;
 
 
-const handler = NextAuth();
+
+                const user = {
+                    name:"Rumman",
+                    id:"1",
+                    username:"rumman1@gmail.com"
+                }
+
+                if(user){
+                    return user;
+                } else{
+                    return null
+                }
+
+
+
+            }
+        })
+    ]
+});
 
 export {handler as GET , handler as POST}
